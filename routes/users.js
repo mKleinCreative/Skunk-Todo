@@ -1,0 +1,47 @@
+
+const express = require('express')
+const router = express.Router()
+
+const passport = require('../config/passport').passport
+const db = require('../config/database')
+
+
+const loginRedirects = {
+  successRedirect: '/',
+  failureRedirect: '/users/login'
+}
+
+router.get( '/register', (req, res, next) => {
+  res.render('register')
+})
+
+router.post( '/register', (req, res) => {
+  const { email, password } = req.body
+
+  db.createUser( email, password )
+    .then( user => {
+      req.login( user, error => {
+        if( error ) {
+          return next( error )
+        }
+        res.redirect('/')
+      })
+    })
+})
+
+router.get( '/login', (req, res, next) => {
+  res.render('login', { user: req.user})
+})
+
+router.post('/login', passport.authenticate( 'local', loginRedirects ))
+
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/');
+});
+
+router.get( '/logout', (request, response) => {
+  request.logout()
+  response.redirect( '/' )
+})
+
+module.exports = router
