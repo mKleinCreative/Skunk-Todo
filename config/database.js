@@ -42,15 +42,16 @@ function getListName(request, response ) {
 }
 
 // Grabs a user name
-function getUserName(request, response ) {
-  var userID = parseInt(request.params.id);
+function getUserName({ email, password }) {
   return db.one(
   `SELECT
-    email
+    id
    FROM
     users
    WHERE
-    id = $1`, userID)
+    email = $1
+   AND
+    password = $2`, [email, password])
 }
 
 // Grabs all the todos in a list

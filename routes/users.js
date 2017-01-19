@@ -7,8 +7,8 @@ const db = require('../config/database')
 
 
 const loginRedirects = {
-  successRedirect: '/',
-  failureRedirect: '/users/login'
+  successRedirect: '/users/login',
+  failureRedirect: '/'
 }
 
 router.get( '/register', (req, res, next) => {
@@ -24,20 +24,16 @@ router.post( '/register', (req, res) => {
         if( error ) {
           return next( error )
         }
-        res.redirect('/')
+        res.redirect('/login')
       })
     })
 })
 
 router.get( '/login', (req, res, next) => {
-  res.render('login', { user: req.user})
+  res.render('landing', { user: req.user})
 })
 
 router.post('/login', passport.authenticate( 'local', loginRedirects ))
-
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
-});
 
 router.get( '/logout', (request, response) => {
   request.logout()

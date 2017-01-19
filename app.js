@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 
-var configDB = require('./config/database')
+var db = require('./config/database')
 
 
 var index = require('./routes/index');
@@ -34,32 +34,28 @@ var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
 app.get('/login', function(req,res){
-  res.render('login.pug') 
+  res.render('login.pug')
 })
 
 
 passport.use(new LocalStrategy(
   function(email, password, done) {
-    db.getUserName({ email: email }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Email isn\'t registered.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
+    console.log('im working', email );
+    db.getUserName({ email, password })
+    .then(result => {
+      return done(null, result);
+    })
+    .catch( error => {
+      return done(error)
+    })
   }
 ));
 
-app.post('/login',
-passport.authenticate('local'),
-function(req, res) {
-  // If this function gets called, authentication was successful.
-  // `req.user` contains the authenticated user.
-  res.redirect('/users/' + req.user.username);
-});
+// app.post('/login',
+// passport.authenticate('local'),
+// function(req, res) {
+//   res.redirect('/users/' + req.user.username);
+// });
 
 app.use('/', index);
 app.use('/users', users);
