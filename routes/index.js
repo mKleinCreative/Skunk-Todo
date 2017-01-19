@@ -8,6 +8,7 @@ const formatLists = results => {
     if( ! memo.find( item => item.id === result.id ) ) {
       memo.push({
         id: result.id,
+        user_id: result.
         title: result.title,
         complete: result.complete,
         todos: []
