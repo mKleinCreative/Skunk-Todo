@@ -3,7 +3,12 @@ extends layout
 block content
   h1 Sign YUP!
   .registerBox
-    form.loginForm(method='post', action='/users/register')
-      input(type='text', name='email', placeholder='Sign up here!')
-      input(type='text', name='password', placeholder='Password')
-      button(type='submit') Sign up
+    .form
+      form.login-form(method='post', action='/users/login')
+        input(type='text', name='username' placeholder='email')
+        input(type='password', name='password' placeholder='password')
+        button(type="submit") sign me up
+        p.message
+          | Already have an account?
+          br
+          a(href='/login') Login here
