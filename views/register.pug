@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1 Sign YUP!
-  .registerBox
+  #registerBox
     form.loginForm(method='post', action='/users/register')
       input(type='text', name='email', placeholder='Sign up here!')
       input(type='text', name='password', placeholder='Password')

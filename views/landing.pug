@@ -3,3 +3,9 @@ extends layout
 block content
   .welcomeBox
     h1 Welcome user!
+
+  .listBox
+    each val in lists
+      h1= val.title
+      //- each todo in lists.todo
+      //-   h4= val.todo
