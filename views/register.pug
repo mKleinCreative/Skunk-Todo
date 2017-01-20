@@ -4,12 +4,11 @@ block content
   h1 Sign YUP!
   .registerBox
     .form
-      form.login-form(method='post', action='/users/login')
+      form.login-form(method='post', action='/users/register')
         input(type='text', name='username' placeholder='email')
         input(type='password', name='password' placeholder='password')
-        button(type="submit") sign me up
+        button(type='submit') sign me up
         p.message
           | Already have an account?
           br
-          a(href='/login') Login here
-
+          a(href='/users/login') Login here

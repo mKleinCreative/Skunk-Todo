@@ -35,6 +35,7 @@ router.get( '/', (request, response, next) => {
 })
 
 router.get( '/users/login', (request, response, next) => {
+  console.log('$$$$ req.user::', request.user)
   db.getLists()
     .then( formatLists )
     .then( lists => response.render( 'landing', { lists }))

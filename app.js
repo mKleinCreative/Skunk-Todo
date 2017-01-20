@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var session = require('express-session')
 
 var db = require('./config/database')
 
@@ -15,7 +16,7 @@ var users = require('./routes/users');
 var app = express();
 
 // Required for passport
-// app.use(session({ secret: 'ilovescotchscotchyscotchscotch'}));
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch'}));
 app.use(passport.initialize());
 app.use(passport.session());
 // view engine setup
@@ -38,7 +39,12 @@ app.get('/login', function(req,res){
 })
 
 
-passport.use(new LocalStrategy(
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true,
+    session: true
+  },
   function(email, password, done) {
     console.log('im working', email );
     db.getUserName({ email, password })
@@ -50,6 +56,18 @@ passport.use(new LocalStrategy(
     })
   }
 ));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  db.getUserById(id)
+   .then(user => {
+    if(user)
+      return cb(null, user)
+   })
+});
 
 
 app.use('/', index);

@@ -54,6 +54,16 @@ function getUserName({ email, password }) {
     password = $2`, [email, password])
 }
 
+function getUserById(id) {
+  return db.one(
+  `SELECT
+    id
+   FROM
+    users
+   WHERE
+    id = $1`, [id])
+}
+
 // Grabs all the todos in a list
 function getTodosInList(listID) {
   return db.many(
@@ -187,6 +197,7 @@ module.exports = {
   getAllTodos,
   getListName,
   getUserName,
+  getUserById,
   getLists,
   getTodosFromList,
   getTodosInList,

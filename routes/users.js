@@ -30,6 +30,7 @@ router.post( '/register', (req, res) => {
 })
 
 router.get( '/login', (req, res, next) => {
+  console.log('$$$$ req.user::', req.user)
   res.render('landing', { user: req.user})
 })
 
