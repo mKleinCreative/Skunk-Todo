@@ -2,7 +2,7 @@ extends layout
 
 block content
   if (!user)
-    a(href="/login") Login
+    a(href="/users/login") Login
     br
     a(href="/users/register") Register
   if (user)
