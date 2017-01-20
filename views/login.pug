@@ -2,8 +2,13 @@ extends layout
 
 block content
   h1 Login
-  .loginBox
-    form.loginForm(method='post', action='/users/login')
-      input(type='text', name='username', placeholder='Email')
-      input(type='text', name='password', placeholder='Password')
-      button(type='submit') login
+  .login-page
+    .form
+      form.login-form(method='post', action='/users/login')
+        input(type='text', name='username' placeholder='username')
+        input(type='password', name='password' placeholder='password')
+        button(type="submit") let me in
+        p.message
+          | Not registered?
+          br
+          a(href='/users/register') Create an account
