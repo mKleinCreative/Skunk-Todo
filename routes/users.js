@@ -2,7 +2,7 @@
 const express = require('express')
 const router = express.Router()
 
-const passport = require('../config/passport').passport
+const passport = require('passport')
 const db = require('../config/database')
 
 
@@ -16,9 +16,9 @@ router.get( '/register', (req, res, next) => {
 })
 
 router.post( '/register', (req, res) => {
-  const { email, password } = req.body
+  const { username, password } = req.body
 
-  db.createUser( email, password )
+  db.createUser( username, password )
     .then( user => {
       req.login( user, error => {
         if( error ) {

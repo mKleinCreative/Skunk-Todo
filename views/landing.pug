@@ -4,6 +4,9 @@ block content
   .welcomeBox
     h1 Welcome user!
 
+    form(method='POST', action='/makeTodo')
+      input(type='text', name='todoDesc', placeholder='Add Task')
+
   .listBox
     each val in lists
       h1= val.title

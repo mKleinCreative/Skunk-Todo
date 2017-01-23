@@ -34,11 +34,13 @@ router.get( '/', (request, response, next) => {
   response.render('index')
 })
 
-router.get( '/users/login', (request, response, next) => {
+router.post( '/users/login', (request, response, next) => {
   console.log('$$$$ req.user::', request.user)
   db.getLists()
     .then( formatLists )
     .then( lists => response.render( 'landing', { lists }))
+
+  console.log('hello')
 })
 
 router.post('/makeList', (request, response) => {
@@ -52,13 +54,12 @@ router.post('/makeList', (request, response) => {
 });
 
 router.post('/makeTodo', (request, response) => {
-  const list_id = request.body.listIdForTodo
+  //const list_id = request.body.listIdForTodo
+  const list_id = 1
   const description = request.body.todoDesc
   const complete = false
   db.createTodo(list_id, description, complete)
-    .then( list => {
-      response.redirect( '/users/login' )
-    })
+    .then( lists => response.render( 'landing', { lists }))
     .catch( error => {
       console.log('error', error );
 

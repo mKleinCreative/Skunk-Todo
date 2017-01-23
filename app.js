@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session')
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
 
 var db = require('./config/database')
 
@@ -31,8 +33,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+app.use('/', index);
+app.use('/users', users);
 
 app.get('/login', function(req,res){
   res.render('login.pug')
@@ -68,11 +70,6 @@ passport.deserializeUser(function(id, cb) {
       return cb(null, user)
    })
 });
-
-
-app.use('/', index);
-app.use('/users', users);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
